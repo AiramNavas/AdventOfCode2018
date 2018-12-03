@@ -1,15 +1,16 @@
 public class Main {
 
     public static void main(String[] args) {
-        ReadInventoryManagementSystem reader = new ReadInventoryManagementSystem();
-        InventoryManagementSystem ism = new InventoryManagementSystem();
 
+        ReadNoMatterHowYouSliceIt reader = new ReadNoMatterHowYouSliceIt();
+        NoMatterHowYouSliceIt nmhysi = new NoMatterHowYouSliceIt(1000);
+        System.out.println(nmhysi.getSolution(reader.readNMHYST("inputNMHYST.txt")));
 
-        long startTime = System.currentTimeMillis();
-
-        System.out.println(ism.getSolutionPartTwo(reader.readMatrixISM("inputInventoryManagementSystem.txt")));
-
-        long stopTime = System.currentTimeMillis();
-        System.out.println(stopTime - startTime);
+//        long startTime = System.currentTimeMillis();
+//
+//
+//
+//        long stopTime = System.currentTimeMillis();
+//        System.out.println(stopTime - startTime);
     }
 }
