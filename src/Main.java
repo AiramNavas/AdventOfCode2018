@@ -6,6 +6,8 @@ public class Main {
         NoMatterHowYouSliceIt nmhysi = new NoMatterHowYouSliceIt(1000);
         System.out.println(nmhysi.getSolution(reader.readNMHYST("inputNMHYST.txt")));
 
+        System.out.println(nmhysi.getSecondPartSolution());
+
 //        long startTime = System.currentTimeMillis();
 //
 //
