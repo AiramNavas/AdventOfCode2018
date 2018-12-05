@@ -3,15 +3,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-public class ReadInventoryManagementSystem {
+public class ReadStringList {
 
     private ArrayList<String> list;
 
-    public ReadInventoryManagementSystem(){
+    public ReadStringList(){
         setList(new ArrayList<>());
     }
 
-    public ArrayList<String> readMatrixISM(String fileName){
+    public ArrayList<String> readFile(String fileName){
         File file = null;
         FileReader fr = null;
         BufferedReader br = null;

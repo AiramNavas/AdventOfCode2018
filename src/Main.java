@@ -1,12 +1,14 @@
+
 public class Main {
 
     public static void main(String[] args) {
 
-        ReadNoMatterHowYouSliceIt reader = new ReadNoMatterHowYouSliceIt();
-        NoMatterHowYouSliceIt nmhysi = new NoMatterHowYouSliceIt(1000);
-        System.out.println(nmhysi.getSolution(reader.readNMHYST("inputNMHYST.txt")));
+        ReadStringList reader = new ReadStringList();
+        ResponseRecord rr = new ResponseRecord();
+        rr.readList(reader.readFile("inputReposeRecord.txt"));
+        Integer a = rr.getSleepyGuard();
+        System.out.println(rr.getSolution());
 
-        System.out.println(nmhysi.getSecondPartSolution());
 
 //        long startTime = System.currentTimeMillis();
 //
