@@ -1,3 +1,5 @@
+package Day3;
+
 public class Claim {
 
     String ID;

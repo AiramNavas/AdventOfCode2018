@@ -1,3 +1,5 @@
+package Day4;
+
 import org.joda.time.DateTime;
 
 import java.util.*;
@@ -8,12 +10,13 @@ public class ResponseRecord {
     private ArrayList<TableLineRR> table;
     private Hashtable<Integer, Integer> guardsSleepTime;
     private Integer iterator;
+    private Integer accumulatorTemp = 0;
 
     public ResponseRecord(){
         setInputs(new TreeMap<>());
         setTable(new ArrayList<>());
         setGuardsSleepTime(new Hashtable<>());
-        iterator = 0;
+        setIterator(0);
     }
 
     public void readList(ArrayList<String> list) {
@@ -21,7 +24,7 @@ public class ResponseRecord {
             AddInput(list.get(i));
         }
 
-        iterator = 0;
+        setIterator(0);
         Character[] auxTableLine = new Character[60];
         Integer actualGuardID = Integer.parseInt(getInputs().entrySet().iterator().next().getValue().substring(7));
         if(!getGuardsSleepTime().containsKey(Integer.parseInt(getInputs().entrySet().iterator().next().getValue().substring(7))))
@@ -36,7 +39,7 @@ public class ResponseRecord {
                     if(!getGuardsSleepTime().containsKey(Integer.parseInt(entry.getValue().substring(7))))
                         getGuardsSleepTime().put(actualGuardID, 0);
                     auxTableLine = new Character[60];
-                    iterator = 0;
+                    setIterator(0);
                 }
 
             }
@@ -53,7 +56,7 @@ public class ResponseRecord {
 
         UpdateTable(60, "falls", auxTableLine);
         getTable().add(new TableLineRR(actualGuardID, auxTableLine));
-        iterator = 0;
+        setIterator(0);
     }
 
     public Integer getSolution() {
@@ -68,10 +71,10 @@ public class ResponseRecord {
     }
 
     private void UpdateTable(Integer minute, String state, Character[] auxTableLine) {
-        for (int i = iterator; i < minute; i++){
+        for (int i = getIterator(); i < minute; i++){
             auxTableLine[i] = getNewState(state);
         }
-        iterator = minute;
+        setIterator(minute);
     }
 
     private void AddInput(String s) {
@@ -116,7 +119,26 @@ public class ResponseRecord {
             minuteToCheck++;
         }
 
+        setAccumulatorTemp(accumulator);
+
         return minuteMostCommon;
+    }
+
+    public Integer getMostFrequentlyAsleepGuard(){
+        Integer guardID = -1;
+        Integer major = Integer.MIN_VALUE;
+
+        Integer minute = 0;
+        for (Map.Entry<Integer, Integer> entry : getGuardsSleepTime().entrySet()) {
+            getMostCommonMinute(entry.getKey());
+            if(getAccumulatorTemp() > major){
+                major = getAccumulatorTemp();
+                guardID = entry.getKey();
+                minute = getMostCommonMinute(entry.getKey());
+            }
+            setAccumulatorTemp(-1);
+        }
+        return guardID * minute;
     }
 
     public Map<DateTime, String> getInputs() {
@@ -141,5 +163,21 @@ public class ResponseRecord {
 
     public void setGuardsSleepTime(Hashtable<Integer, Integer> guardsSleepTime) {
         this.guardsSleepTime = guardsSleepTime;
+    }
+
+    public Integer getIterator() {
+        return iterator;
+    }
+
+    public void setIterator(Integer iterator) {
+        this.iterator = iterator;
+    }
+
+    public Integer getAccumulatorTemp() {
+        return accumulatorTemp;
+    }
+
+    public void setAccumulatorTemp(Integer accumulatorTemp) {
+        this.accumulatorTemp = accumulatorTemp;
     }
 }

@@ -1,3 +1,5 @@
+package Day4;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,5 +35,6 @@ public class ResponseRecordTest {
         Assert.assertEquals(Integer.valueOf(10), resRec.getSleepyGuard());
         Assert.assertEquals(Integer.valueOf(24), resRec.getMostCommonMinute(resRec.getSleepyGuard()));
         Assert.assertEquals(Integer.valueOf(240), resRec.getSolution());
+        Assert.assertEquals(Integer.valueOf(4455), resRec.getMostFrequentlyAsleepGuard());
     }
 }
