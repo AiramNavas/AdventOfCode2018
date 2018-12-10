@@ -54,16 +54,55 @@ public class AlchemicalReductionTest {
 
     @Test
     public void TestingDay5Example(){
-        AlchemicalReduction ar = new AlchemicalReduction(INPUT);
-
-        Assert.assertEquals("dabCBAcaDA", ar.getSolution());
-
+        AlchemicalReduction ar1 = new AlchemicalReduction(INPUT);
         AlchemicalReduction ar2 = new AlchemicalReduction("aA");
-
-        Assert.assertEquals("", ar2.getSolution());
-
         AlchemicalReduction ar3 = new AlchemicalReduction("cbaAB");
 
+        Assert.assertEquals("dabCBAcaDA", ar1.getSolution());
+        Assert.assertEquals("", ar2.getSolution());
         Assert.assertEquals("c", ar3.getSolution());
+    }
+
+    @Test
+    public void TestingSecondPartDay5(){
+        AlchemicalReduction ar1 = new AlchemicalReduction("dabAcCaCBAcCcaDA");
+        AlchemicalReduction ar2 = new AlchemicalReduction("dabAcCaCBAcCcaDA");
+        AlchemicalReduction ar3 = new AlchemicalReduction("dabAcCaCBAcCcaDA");
+        AlchemicalReduction ar4 = new AlchemicalReduction("dabAcCaCBAcCcaDA");
+
+        Assert.assertEquals("dbcCCBcCcD", ar1.getNewStringWithout('a'));
+        Assert.assertEquals("daAcCaCAcCcaDA", ar2.getNewStringWithout('b'));
+        Assert.assertEquals("dabAaBAaDA", ar3.getNewStringWithout('c'));
+        Assert.assertEquals("abAcCaCBAcCcaA", ar4.getNewStringWithout('d'));
+    }
+
+    @Test
+    public void TestingGetSolutionSecondPartDay5(){
+        AlchemicalReduction ar1 = new AlchemicalReduction("dabAcCaCBAcCcaDA");
+        ar1 = new AlchemicalReduction(ar1.getNewStringWithout('a'));
+
+        AlchemicalReduction ar2 = new AlchemicalReduction("dabAcCaCBAcCcaDA");
+        ar2 = new AlchemicalReduction(ar2.getNewStringWithout('b'));
+
+        AlchemicalReduction ar3 = new AlchemicalReduction("dabAcCaCBAcCcaDA");
+        ar3 = new AlchemicalReduction(ar3.getNewStringWithout('c'));
+
+        AlchemicalReduction ar4 = new AlchemicalReduction("dabAcCaCBAcCcaDA");
+        ar4 = new AlchemicalReduction(ar4.getNewStringWithout('d'));
+
+        Assert.assertEquals("dbCBcD", ar1.getSolution());
+        Assert.assertEquals("daCAcaDA", ar2.getSolution());
+        Assert.assertEquals("daDA", ar3.getSolution());
+        Assert.assertEquals("abCBAc", ar4.getSolution());
+    }
+
+    @Test
+    public void TestingFinalSolutionSecondPartDay5(){
+        AlchemicalReduction ar1 = new AlchemicalReduction("dabAcCaCBAcCcaDA");
+
+        String result = ar1.getSecondSolution();
+
+        Assert.assertEquals("daDA", result);
+        Assert.assertEquals(Integer.valueOf(4), Integer.valueOf(result.length()));
     }
 }

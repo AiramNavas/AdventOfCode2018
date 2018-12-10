@@ -9,7 +9,7 @@ public class Main {
 
         AlchemicalReduction ar = new AlchemicalReduction(reader.getList().get(0));
 
-        System.out.println(ar.getSolution().length());
+        System.out.println(ar.getSecondSolution().length());
 
 //        long startTime = System.currentTimeMillis();
 //
