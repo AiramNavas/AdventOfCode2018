@@ -1,16 +1,15 @@
 import Common.ReadStringList;
-import Day4.ResponseRecord;
+import Day5.AlchemicalReduction;
 
 public class Main {
 
     public static void main(String[] args) {
-
         ReadStringList reader = new ReadStringList();
-        ResponseRecord rr = new ResponseRecord();
-        rr.readList(reader.readFile("inputReposeRecord.txt"));
-        System.out.println(rr.getMostFrequentlyAsleepGuard());
-        System.out.println(rr.getSolution());
+        reader.readFile("inputAlchemicalReduction.txt");
 
+        AlchemicalReduction ar = new AlchemicalReduction(reader.getList().get(0));
+
+        System.out.println(ar.getSolution().length());
 
 //        long startTime = System.currentTimeMillis();
 //
