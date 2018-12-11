@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ChronalCoordinates {
 
-    Integer[][] grid;
+    Grid grid;
     Hashtable<Integer, Integer> areas;
     ArrayList<Point> points;
 
@@ -20,10 +20,10 @@ public class ChronalCoordinates {
             getPoints().add(new Point(Integer.parseInt(point[0]), Integer.parseInt(point[1])));
         }
         Integer size = getBiggest(getPoints());
-        setGrid(new Integer[size][size]);
+        setGrid(new Grid(size, size));
         setAreas(new Hashtable<>());
         for (int i = 0; i < getPoints().size(); i++) {
-            getGrid()[getPoints().get(i).x][getPoints().get(i).y] = i;
+            getGrid().set(getPoints().get(i).x, getPoints().get(i).y, i);
             getAreas().put(i, 1);
         }
     }
@@ -40,80 +40,72 @@ public class ChronalCoordinates {
     }
 
     public void solve() {
-        Double sum = new Double(0);
-
-        Double minorDistance;
+        int minorDistance;
         Integer pointID = 0;
-        Double check;
+        int check;
         Boolean equalDistances = false;
-        for (int i = 0; i < getGrid().length; i++){
-            for (int j = 0; j < getGrid()[i].length; j++){
-                minorDistance = Double.MAX_VALUE;
-                //if(getGrid()[i][j] == null) {
-                    for (int k = 0; k < getPoints().size(); k++){
-                        check = distanceTo(new Point(i, j), getPoints().get(k));
-                        sum += check; // sum
-                        if (check < minorDistance) {
-                            minorDistance = check;
-                            pointID = k;
-                            equalDistances = false;
-                        } else if (check.equals(minorDistance)) {
-                            equalDistances = true;
-                        }
+        for (int i = 0; i < getGrid().getSizeX(); i++){
+            for (int j = 0; j < getGrid().getSizeY(); j++){
+                minorDistance = Integer.MAX_VALUE;
+                for (int k = 0; k < getPoints().size(); k++){
+                    check = (new PointM(i, j)).manhattanDistanceTo(getPoints().get(k));
+                    if (check < minorDistance) {
+                        minorDistance = check;
+                        pointID = k;
+                        equalDistances = false;
+                    } else if (check == minorDistance) {
+                        equalDistances = true;
                     }
-                    if(!equalDistances && getGrid()[i][j] == null){
-                        getGrid()[i][j] = pointID;
-                        getAreas().put(pointID, getAreas().get(pointID) + 1);
-                    }
-                    else {
-                        getGrid()[i][j] = -1;
-                    }
-                    equalDistances = false;
-                //}
-                // sum
-                if(sum < 10000){
-                    getGrid()[i][j] = -2;
                 }
-                sum = 0.0;
+                if(!equalDistances && getGrid().get(i, j) == null){
+                    getGrid().set(i, j, pointID);
+                    getAreas().put(pointID, getAreas().get(pointID) + 1);
+                }
+                else {
+                    getGrid().set(i, j, -1);
+                }
+                equalDistances = false;
             }
         }
-//        for (int i = 0; i < getGrid().length; i++){
-//            for (int j = 0; j < getGrid()[i].length; j++){
-//                if(getPoints().contains(new Point(i, j)))
-//                    System.out.print("(" + getGrid()[i][j] + ")\t");
-//                else
-//                    System.out.print(getGrid()[i][j] + "\t");
-//            }
-//            System.out.println();
-//        }
     }
 
-    public Integer getAreaSecondPart(){
-        Integer sum = 0;
-        for (int i = 0; i < getGrid().length; i++){
-            for (int j = 0; j < getGrid()[i].length; j++){
-                if(getGrid()[i][j] == -2)
-                    sum++;
+    public Integer getAreaSecondPart(Integer cap){
+        int check = 0;
+        int sum = 0;
+        for (int i = 0; i < getGrid().getSizeX(); i++){
+            for (int j = 0; j < getGrid().getSizeY(); j++){
+                for (int k = 0; k < getPoints().size(); k++){
+                    check = (new PointM(i, j)).manhattanDistanceTo(getPoints().get(k));
+                    sum += check;
+                }
+                if(sum < cap){
+                    getGrid().get(i, j).setRegion(true);
+                }
+                sum = 0;
             }
         }
-        return sum;
+
+        Integer counter = 0;
+        for (int i = 0; i < getGrid().getSizeX(); i++){
+            for (int j = 0; j < getGrid().getSizeY(); j++){
+                if(getGrid().get(i, j).getRegion())
+                    counter++;
+            }
+        }
+        return counter;
     }
 
     private Boolean isInfinity(Integer pointID){
-        for (int i = 0; i < getGrid().length; i++){
-            for (int j = 0; j < getGrid()[i].length; j++){
-                if(((i > 0 && i < getGrid().length - 1) && (j == 0 || j == getGrid().length - 1))
+        for (int i = 0; i < getGrid().getSizeX(); i++){
+            for (int j = 0; j < getGrid().getSizeY(); j++){
+                if(((i > 0 && i < getGrid().getSizeX() - 1) && (j == 0 || j == getGrid().getSizeY() - 1))
                         || (i == 0)
-                        || (i == getGrid().length - 1))
-                    if(pointID == getGrid()[i][j])
+                        || (i == getGrid().getSizeX() - 1))
+                    if(pointID == getGrid().get(i, j).getID())
                         return true;
             }
         }
         return false;
-    }
-
-    private Double distanceTo(Point point, Point point1) {
-        return new Double(Math.abs(point1.x - point.x) + Math.abs(point1.y - point.y));
     }
 
     public Integer getLargestArea() {
@@ -126,11 +118,11 @@ public class ChronalCoordinates {
         return majorArea;
     }
 
-    public Integer[][] getGrid() {
+    public Grid getGrid() {
         return grid;
     }
 
-    public void setGrid(Integer[][] grid) {
+    public void setGrid(Grid grid) {
         this.grid = grid;
     }
 

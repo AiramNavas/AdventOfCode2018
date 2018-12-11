@@ -3,11 +3,8 @@ package Day6;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import static org.junit.Assert.*;
 
 public class ChronalCoordinatesTest {
 
@@ -22,11 +19,47 @@ public class ChronalCoordinatesTest {
             ));
 
     @Test
+    public void TestingCells(){
+        Cell cell = new Cell();
+
+        cell.setID(2);
+        cell.setIsPoint(true);
+
+        Assert.assertEquals(2, cell.getID());
+        Assert.assertEquals(true, cell.isPoint());
+    }
+
+    @Test
+    public void SizeValuesGrid(){
+        Grid grid = new Grid(5, 6);
+
+        Assert.assertEquals(5, grid.getSizeX());
+        Assert.assertEquals(6, grid.getSizeY());
+    }
+
+    @Test
+    public void AddElementsAndCheckWhatContains(){
+        Grid grid = new Grid(5, 5);
+
+        grid.set(1, 2, 7);
+
+        Assert.assertEquals(7, grid.get(1, 2).getID());
+    }
+
+    @Test
+    public void DifferenceBetweenPoints(){
+        PointM point1 = new PointM(4, 5);
+        PointM point2 = new PointM(5, 6);
+
+        Assert.assertEquals(2, point1.manhattanDistanceTo(point2));
+    }
+
+    @Test
     public void TestingGridSize(){
         ChronalCoordinates cc = new ChronalCoordinates(points);
 
-        Assert.assertEquals(10, cc.getGrid().length);
-        Assert.assertEquals(10, cc.getGrid()[0].length);
+        Assert.assertEquals(10, cc.getGrid().getSizeX());
+        Assert.assertEquals(10, cc.getGrid().getSizeY());
     }
 
     @Test
@@ -44,6 +77,6 @@ public class ChronalCoordinatesTest {
 
         cc.solve();
 
-        Assert.assertEquals(Integer.valueOf(16), cc.getAreaSecondPart());
+        Assert.assertEquals(Integer.valueOf(16), cc.getAreaSecondPart(32));
     }
 }

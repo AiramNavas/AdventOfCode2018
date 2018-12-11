@@ -1,9 +1,5 @@
 import Common.ReadStringList;
-import Day5.AlchemicalReduction;
 import Day6.ChronalCoordinates;
-
-import java.util.Hashtable;
-import java.util.Map;
 
 public class Main {
 
@@ -13,7 +9,7 @@ public class Main {
         ChronalCoordinates cc = new ChronalCoordinates(reader.readFile("inputChronalCoordinates.txt"));
         cc.solve();
         System.out.println(cc.getLargestArea());
-        System.out.println(cc.getAreaSecondPart());
+        System.out.println(cc.getAreaSecondPart(10000));
 
 //        long startTime = System.currentTimeMillis();
 //
