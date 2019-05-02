@@ -1,15 +1,16 @@
 import Common.ReadStringList;
-import Day6.ChronalCoordinates;
+import Day7.CharGraph;
 
 public class Main {
 
     public static void main(String[] args) {
 
+// inputTSOIP.txt
+
         ReadStringList reader = new ReadStringList();
-        ChronalCoordinates cc = new ChronalCoordinates(reader.readFile("inputChronalCoordinates.txt"));
-        cc.solve();
-        System.out.println(cc.getLargestArea());
-        System.out.println(cc.getAreaSecondPart(10000));
+        CharGraph graph = new CharGraph();
+        graph.generateGraph(reader.readFile("inputTSOIP.txt"));
+        System.out.println(graph.getSolutionFP() + "\n" + graph.getSolutionFP().length());
 
 //        long startTime = System.currentTimeMillis();
 //
