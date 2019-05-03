@@ -108,15 +108,21 @@ public class CharGraph {
     }
 
     public Character getFirstAlphabetically(){
-        Character charToReturn = getNodesToCheck().get(0).getValue();
-        for (int i = 1; i < getNodesToCheck().size(); i++){
-            if (charToReturn > getNodesToCheck().get(i).getValue() && nodeIsReady(getNodesToCheck().get(i)))
+        Character charToReturn = null;
+        for (int i = 0; i < getNodesToCheck().size(); i++){
+            if (nodeIsReady(getNodesToCheck().get(i)) && charToReturn == null)
                 charToReturn = getNodesToCheck().get(i).getValue();
+            else if(nodeIsReady(getNodesToCheck().get(i)))
+                charToReturn = getFirstCharAlphabetically(charToReturn, getNodesToCheck().get(i).getValue());
         }
 
         updateList(charToReturn);
 
         return charToReturn;
+    }
+
+    public char getFirstCharAlphabetically(char a, char b){
+        return a > b ? b : a;
     }
 
     public boolean nodeIsReady(CharNode n){
