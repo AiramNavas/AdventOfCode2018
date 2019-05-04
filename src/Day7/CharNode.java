@@ -7,22 +7,26 @@ public class CharNode {
     private Character value;
     private ArrayList<CharNode> nextNodes;
     private ArrayList<CharNode> prevNodes;
+    private Boolean busy;
 
     public CharNode(){
         setNextNodes(new ArrayList<>());
         setPrevNodes(new ArrayList<>());
+        setBusy(false);
     }
 
     public CharNode(Character v){
         setValue(v);
         setNextNodes(new ArrayList<>());
         setPrevNodes(new ArrayList<>());
+        setBusy(false);
     }
 
     public CharNode(CharNode n){
         setValue(n.getValue());
         setNextNodes(n.getNextNodes());
         setPrevNodes(n.getPrevNodes());
+        setBusy(n.getBusy());
     }
 
     public Character getValue() {
@@ -60,5 +64,13 @@ public class CharNode {
 
     public void setPrevNodes(ArrayList<CharNode> prevNodes) {
         this.prevNodes = prevNodes;
+    }
+
+    public Boolean getBusy() {
+        return busy;
+    }
+
+    public void setBusy(Boolean busy) {
+        this.busy = busy;
     }
 }

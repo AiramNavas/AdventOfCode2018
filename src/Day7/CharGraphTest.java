@@ -30,6 +30,28 @@ public class CharGraphTest {
             "Step F must be finished before step H can begin."
     ));
 
+    public SecondPartTable spectedSolutionSecondPart = new SecondPartTable(
+            2,
+            new ArrayList<>(Arrays.asList(
+                new ArrayList<>(Arrays.asList("0", "C", ".", "")),
+                new ArrayList<>(Arrays.asList("1", "C", ".", "")),
+                new ArrayList<>(Arrays.asList("2", "C", ".", "")),
+                new ArrayList<>(Arrays.asList("3", "A", "F", "C")),
+                new ArrayList<>(Arrays.asList("4", "B", "F", "CA")),
+                new ArrayList<>(Arrays.asList("5", "B", "F", "CA")),
+                new ArrayList<>(Arrays.asList("6", "D", "F", "CAB")),
+                new ArrayList<>(Arrays.asList("7", "D", "F", "CAB")),
+                new ArrayList<>(Arrays.asList("8", "D", "F", "CAB")),
+                new ArrayList<>(Arrays.asList("9", "D", ".", "CABF")),
+                new ArrayList<>(Arrays.asList("10", "E", ".", "CABFD")),
+                new ArrayList<>(Arrays.asList("11", "E", ".", "CABFD")),
+                new ArrayList<>(Arrays.asList("12", "E", ".", "CABFD")),
+                new ArrayList<>(Arrays.asList("13", "E", ".", "CABFD")),
+                new ArrayList<>(Arrays.asList("14", "E", ".", "CABFD")),
+                new ArrayList<>(Arrays.asList("15", ".", ".", "CABFDE"))
+            ))
+    );
+
     @Test
     public void CreatingGraphNull(){
         CharGraph g = new CharGraph();
@@ -73,7 +95,7 @@ public class CharGraphTest {
 
         g.generateGraph(linkList);
 
-        Assert.assertEquals("CABDFE", g.getSolutionFP());
+        Assert.assertEquals("CABDFE", g.getSolutionFirstPart());
     }
 
     @Test
@@ -82,6 +104,27 @@ public class CharGraphTest {
 
         g.generateGraph(linkList2);
 
-        Assert.assertEquals("ABCEDFGH", g.getSolutionFP());
+        Assert.assertEquals("ABCEDFGH", g.getSolutionFirstPart());
+    }
+
+    /* TESTING THE SECOND PART */
+    @Test
+    public void TestingPrintTable(){
+        CharGraph g = new CharGraph();
+
+        g.generateGraph(linkList, 0, spectedSolutionSecondPart.getnWorkers(), spectedSolutionSecondPart.getTable());
+
+        Assert.assertEquals(spectedSolutionSecondPart.print(), g.getTable().print());
+    }
+
+    @Test
+    public void GetSolutionGraphSecondPart(){
+        CharGraph g = new CharGraph();
+
+        g.generateGraph(linkList, 0, 2, new ArrayList<>());
+        System.out.println(g.getSolutionSecondPart());
+        System.out.println(g.getTable().print());
+
+        Assert.assertEquals(spectedSolutionSecondPart.print(), g.getTable().print());
     }
 }
